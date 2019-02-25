@@ -1,142 +1,72 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/ >
-        <title>Group Visualisation</title>
 
-        <!-- Google fonts -->
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
-        <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-
-        <!-- D3.js -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
-
-        <style>
-            body {
-                font-family: 'Open Sans', sans-serif;
-                font-size: 11px;
-                font-weight: 300;
-                fill: #242424;
-                text-align: center;
-                text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
-                cursor: default;
-            }
-
-            .legend {
-                font-family: 'Raleway', sans-serif;
-                fill: #333333;
-            }
-            .tooltip {
-                fill: #333333;
-            }
-            #left {
-                /*width: 300px;*/
-                float: left;
-                 width:300px;
-                 text-align: left;
-            }
-
-            #right {
-                /*width: 300px;*/
-                float: right;
-            }
-
-            .radarChart {
-                width: auto;
-                float: left;
-            }
-
-        </style>
-
-    </head>
-    <body>
-        <div id="left" >
-            <div id= "group" ><b>GROUP </b>       </div>
-        </div>
-
-        <div class="radarChart" id="radarChart"></div>
-        <div id= info >INFO ON HOVER</div>
-
-        <script src="radarChart.js"></script>
-        <script src="data.js"></script>
-
-        <script>
-
-      /* Radar chart design created by Nadieh Bremer - VisualCinnamon.com */
-
-            //////////////////////////////////////////////////////////////
-            //////////////////////// Set-Up //////////////////////////////
-            //////////////////////////////////////////////////////////////
-
-            var margin = {top: 100, right: 100, bottom: 100, left: 100},
-                width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
-                height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Vis</title>
 
 
-            //////////////////////////////////////////////////////////////
-            //////////////////// Draw the Chart //////////////////////////
-            //////////////////////////////////////////////////////////////
+    <style>
+        * {
+            font-weight: bold;
+            font-family: Verdana, Geneva, Tahoma, sans-serif
+        }
 
-            var color = d3.scale.ordinal()
-                .range(["#EDC951","#CC333F","#00A0B0"]);
+        img {
+            width: 50%;
+            display: block;
+        }
 
-            var radarChartOptions = {
-              w: width,
-              h: height,
-              margin: margin,
-                   opacityArea: 0.1, 
-              maxValue: 10,
-              levels: 5,
-              roundStrokes: true,
-              color: color
-            };
+        hr {
+            display: block;
+            height: 1px;
+            border: 0;
+            border-top: 1px solid #ccc;
+            margin: 1em 0;
+            padding: 0;
+        }
+    </style>
 
-            function onHover(i) {
-               document.getElementById("info").innerHTML="<div><b>Name</b>:"+showndata[i][1][0]['name']+"<br><b>Major</b>:"+showndata[i][1][0]['major']+"<br><b>Interests</b>: "+showndata[i][1][0]['interests']+"<br> <b>Degree</b>: "+showndata[i][1][0]['degree']+"<br> <b>Expectations</b>: "+showndata[i][1][0]['expectations']+" </div>"
-            }
-            function onClick(d,i) {
-                console.log(i)
-                document.getElementById("left").innerHTML += showndata[i][1][0]['name'] + "<br>"
+</head>
 
-                data = data.filter(function(item) {
-                        return item[1][0]['name'] !== showndata[i][1][0]['name']
-                })
-               // data.splice(i,1);
-               // data = showndata
-               makeChart();
-            }
+<body>
+    <h1> My goal is to find family values in 5 countries.
+    </h1>
+    <hr />
 
-             var categories = ["Information Visualisation","Statistical","Mathematical","Artistic","Computer Usage","Programming","CG Programming","HCI programming","User Experience","Communication","Collaboration","Code Repository"]
+    <img src="1.png" />
 
-            function createSliders(){
-                categories.forEach(function(t) {
-                          document.getElementById("left").innerHTML = '<div id> <input type="range" id="'+t+'" name="'+t+'" min="0" max="10" value="2" onchange="makeChart()"> <label for="volume">'+t+'</label></div>' + document.getElementById("left").innerHTML
-                });
-            }
+    I open the page and have to selects a fixed span of 5 years, the map can not be interacted with. I select the
+    latest year span.
+    <hr />
 
+    <img src="2.png" />
 
-            var showndata;
-            function makeChart() {
-                document.getElementById("radarChart").innerHTML = "";
+    I see on the top bar that I will have to make some selections. I choose 5 countries of personal interest to me.
+    <hr />
+    <img src="3.png" />
 
-                selected_data = data.slice()
-                for (var i = categories.length - 1; i >= 0; i--) {
-                    val = document.getElementById(categories[i]).value
-                    selected_data = selected_data.filter(d =>  d[0][i].value > val)
-                }
-                showndata = selected_data
-                if (showndata.length == 0){
-                    document.getElementById("radarChart").innerHTML = "NO MATCHES MAKE LESS STRICT REQUIREMENTS";
-                    document.getElementById("info").innerHTML= ""
-                }
-                data2 = (selected_data.map(function(d){return d[0]}))
-                // console.log(data2)
-                RadarChart(".radarChart", data2, radarChartOptions,onHover,onClick);
-            }
-            createSliders()
-            makeChart()
+    Now I’m supposed to select what I want to see. I choose my topic.
+    <hr />
+    <img src="4.png" />
+
+    I am now presented with the data it is indeed what I have chosen to visualise but I have to spend a bit of time to
+    draw any conclusions from the data, there are a lot of numbers presented at once.
+    <hr />
+    <img src="5.png" />
+
+    I got interested in the “cross by” drop down and selected Employment status there. This is even more confusing after
+    a
+    couple of minutes I realize they are showing 3d data in 2d slices.
+    <hr />
+    <img src="6.png" />
+    <img src="7.png" />
+
+    I move on to the map. This doesn’t seem to be working as all countries are white and have negative values. I do it
+    all over again and now all the entries are green instead with values 90-100. I don’t know if this is correct either,
+    the map has basic interaction like hover for more information.
 
 
-        </script>
-    </body>
+</body>
+
 </html>
